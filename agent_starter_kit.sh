@@ -1,19 +1,47 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Variables
-slnname="src"
-agentname="starterkit"
-curntdir="agent.template"
-basepath="/Users/tohoff/Inventory/${curntdir}"
+set -euo pipefail
 
-# Check .NET version
+# Usage: agent name is the only required parameter
+if [[ $# -eq 0 || ${1-} == "-h" || ${1-} == "--help" ]]; then
+    cat <<USAGE
+Usage: $(basename "$0") <agent-name>
+
+Creates a new .NET Aspire agent solution with the following structure:
+    <cwd>/src/
+        - <agent>.Agent (aspire apphost)
+        - <agent>.Agent.Cqrs (classlib)
+        - <agent>.Y.Core (servicedefaults)
+        - <agent>.Api.Endpoints (webapi)
+        - <agent>.Mcp.Endpoints (webapi)
+        - <agent>.Web.Endpoints (web)
+
+Notes:
+    - slnname is fixed to 'src'.
+    - basepath is <current-working-directory>/src.
+    - currentdir is derived from the directory this script is executed in.
+USAGE
+    exit 0
+fi
+
+# Input (single parameter)
+agentname="$1"
+
+# Derived constants/variables
+slnname="src"                 # constant per requirement
+currentdir="$(basename "${PWD}")" # using the directory where script is executed
+basepath="${PWD}/${slnname}"
+
+echo "Agent name: ${agentname}"
+echo "Current dir: ${currentdir}"
+echo "Base path: ${basepath}"
+
+# Check .NET version (require 9.0.0+)
 dotnet_version=$(dotnet --version)
 required_version="9.0.0"
-
-# Compare versions
 if [[ "$(printf '%s\n' "$required_version" "$dotnet_version" | sort -V | head -n1)" != "$required_version" ]]; then
-    echo "Error: .NET $required_version or higher is required."
-    echo "Current version: $dotnet_version"
+    echo "Error: .NET ${required_version} or higher is required."
+    echo "Current version: ${dotnet_version}"
     echo "Please upgrade .NET before running this script."
     exit 1
 fi
@@ -41,12 +69,14 @@ else
     echo ".NET Aspire templates are already installed."
 fi
 
-# Create prj files
-dotnet new gitignore
-dotnet new editorconfig
+mkdir -p "${basepath}"
 
-# Create projects
-dotnet new sln -n "${slnname}"
+# Create top-level files in basepath to keep the solution self-contained
+dotnet new gitignore -o "${basepath}"
+dotnet new editorconfig -o "${basepath}"
+
+# Create solution and projects
+dotnet new sln -n "${slnname}" -o "${basepath}"
 dotnet new aspire-apphost -n "${agentname}.Agent" -o "${basepath}/${agentname}.Agent"
 dotnet new classlib -n "${agentname}.Agent.Cqrs" -o "${basepath}/${agentname}.Agent.Cqrs"
 dotnet new aspire-servicedefaults -n "${agentname}.Y.Core" -o "${basepath}/${agentname}.Y.Core"
@@ -55,52 +85,67 @@ dotnet new webapi -n "${agentname}.Mcp.Endpoints" -o "${basepath}/${agentname}.M
 dotnet new web -n "${agentname}.Web.Endpoints" -o "${basepath}/${agentname}.Web.Endpoints"
 
 # Add projects to solution
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj"
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj"
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj"
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj"
-dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj"
+dotnet sln "${basepath}/${slnname}.sln" add "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj" \
+                                         "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj" \
+                                         "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj" \
+                                         "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" \
+                                         "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" \
+                                         "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj"
+
+# Helper to add one or more NuGet packages to a specific project
+add_packages() {
+    local csproj="$1"; shift || true
+    for spec in "$@"; do
+        local name version
+        if [[ "$spec" == *"@"* ]]; then
+            name="${spec%@*}"
+            version="${spec#*@}"
+            dotnet add "$csproj" package "$name" --version "$version"
+        else
+            dotnet add "$csproj" package "$spec"
+        fi
+    done
+}
 
 # Add common NuGet packages
-# MediatR for CQRS
-cd "${basepath}/${agentname}.Agent.Cqrs"
-dotnet add package MediatR --version 12.5.0
-dotnet add package MediatR.Extensions.Microsoft.DependencyInjection --version 12.1.1
+add_packages "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj" \
+    "MediatR@12.5.0"
 
-# Add FluentValidation for validation
-cd "${basepath}/${agentname}.Api.Endpoints"
-dotnet add package FluentValidation
-dotnet add package FluentValidation.AspNetCore
+add_packages "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" \
+    "FluentValidation" \
+    "FluentValidation.AspNetCore" \
+    "Swashbuckle.AspNetCore"
 
-cd "${basepath}/${agentname}.Mcp.Endpoints"
-dotnet add package FluentValidation
-dotnet add package FluentValidation.AspNetCore
+add_packages "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" \
+    "FluentValidation" \
+    "FluentValidation.AspNetCore" \
+    "Swashbuckle.AspNetCore"
 
-# Add Swashbuckle for OpenAPI/Swagger
-cd "${basepath}/${agentname}.Api.Endpoints"
-dotnet add package Swashbuckle.AspNetCore
-
-cd "${basepath}/${agentname}.Mcp.Endpoints"
-dotnet add package Swashbuckle.AspNetCore
+# Helper to add project references
+add_refs() {
+    local target_csproj="$1"; shift || true
+    for ref in "$@"; do
+        dotnet add "$target_csproj" reference "$ref"
+    done
+}
 
 # Add project references
-cd "${basepath}/${agentname}.Agent"
-dotnet add "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj" reference "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj"
-dotnet add "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj" reference "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj"
-dotnet add "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj" reference "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj"
+add_refs "${basepath}/${agentname}.Agent/${agentname}.Agent.csproj" \
+    "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj" \
+    "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" \
+    "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj"
 
-cd "${basepath}/${agentname}.Web.Endpoints"
-dotnet add "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj" reference "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj"
-dotnet add "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj" reference "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
+add_refs "${basepath}/${agentname}.Web.Endpoints/${agentname}.Web.Endpoints.csproj" \
+    "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj" \
+    "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
 
-cd "${basepath}/${agentname}.Api.Endpoints"
-dotnet add "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" reference "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj"
-dotnet add "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" reference "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
+add_refs "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" \
+    "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj" \
+    "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
 
-cd "${basepath}/${agentname}.Mcp.Endpoints"
-dotnet add "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" reference "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj"
-dotnet add "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" reference "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
+add_refs "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" \
+    "${basepath}/${agentname}.Y.Core/${agentname}.Y.Core.csproj" \
+    "${basepath}/${agentname}.Agent.Cqrs/${agentname}.Agent.Cqrs.csproj"
 
 # Setup centralized configuration by linking appsettings from Agent to Endpoint projects
 echo "Setting up centralized configuration with linked appsettings files..."
@@ -625,7 +670,7 @@ some did structure placed here
 EOF
 
 # Update Agent's Program.cs to properly register services
-cat > "${basepath}/${agentname}.Agent/Program.cs" << EOF
+cat > "${basepath}/${agentname}.Agent/AppHost.cs" << EOF
 var builder = DistributedApplication.CreateBuilder(args);
 
 var apiService = builder.AddProject<Projects.${agentname}_Api_Endpoints>("api-endpoints");
@@ -639,7 +684,7 @@ EOF
 cat > "${basepath}/README.md" << EOF
 # ${agentname} Project
 
-This project was generated using the agent_init_template.sh script.
+This project was generated using the agent_starter_kit.sh script.
 
 ## Project Structure
 
@@ -666,11 +711,10 @@ This project was generated using the agent_init_template.sh script.
 EOF
 
 # Add Healthchecks
-cd "${basepath}/${agentname}.Api.Endpoints"
-dotnet add package AspNetCore.HealthChecks.UI.Client
-
-cd "${basepath}/${agentname}.Mcp.Endpoints"
-dotnet add package AspNetCore.HealthChecks.UI.Client
+add_packages "${basepath}/${agentname}.Api.Endpoints/${agentname}.Api.Endpoints.csproj" \
+    "AspNetCore.HealthChecks.UI.Client"
+add_packages "${basepath}/${agentname}.Mcp.Endpoints/${agentname}.Mcp.Endpoints.csproj" \
+    "AspNetCore.HealthChecks.UI.Client"
 
 # Restore, build, and watch
 dotnet restore "${basepath}/${slnname}.sln"
