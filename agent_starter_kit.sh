@@ -7,8 +7,9 @@ if [[ $# -eq 0 || ${1-} == "-h" || ${1-} == "--help" ]]; then
     cat <<USAGE
 Usage: $(basename "$0") <agent-name>
 
-Creates a new .NET Aspire agent solution with the following structure:
-    <cwd>/src/
+Creates a new .NET Aspire agent solution with the following structure in the CURRENT directory:
+    <cwd>/
+        - src.sln
         - <agent>.Agent (aspire apphost)
         - <agent>.Agent.Cqrs (classlib)
         - <agent>.Y.Core (servicedefaults)
@@ -17,8 +18,8 @@ Creates a new .NET Aspire agent solution with the following structure:
         - <agent>.Web.Endpoints (web)
 
 Notes:
-    - slnname is fixed to 'src'.
-    - basepath is <current-working-directory>/src.
+    - Solution name is fixed to 'src'.
+    - All projects are created as sibling folders in the current directory.
     - currentdir is derived from the directory this script is executed in.
 USAGE
     exit 0
@@ -28,9 +29,9 @@ fi
 agentname="$1"
 
 # Derived constants/variables
-slnname="src"                 # constant per requirement
-currentdir="$(basename "${PWD}")" # using the directory where script is executed
-basepath="${PWD}/${slnname}"
+slnname="src"                      # solution name fixed to 'src'
+currentdir="$(basename "${PWD}")"  # using the directory where script is executed
+basepath="${PWD}"                   # generate everything in current folder
 
 echo "Agent name: ${agentname}"
 echo "Current dir: ${currentdir}"
@@ -69,14 +70,16 @@ else
     echo ".NET Aspire templates are already installed."
 fi
 
-mkdir -p "${basepath}"
-
-# Create top-level files in basepath to keep the solution self-contained
-dotnet new gitignore -o "${basepath}"
-dotnet new editorconfig -o "${basepath}"
+# Create top-level files to keep the solution self-contained (in current directory)
+if [[ ! -f "${basepath}/.gitignore" ]]; then
+    dotnet new gitignore
+fi
+if [[ ! -f "${basepath}/.editorconfig" ]]; then
+    dotnet new editorconfig
+fi
 
 # Create solution and projects
-dotnet new sln -n "${slnname}" -o "${basepath}"
+dotnet new sln -n "${slnname}"
 dotnet new aspire-apphost -n "${agentname}.Agent" -o "${basepath}/${agentname}.Agent"
 dotnet new classlib -n "${agentname}.Agent.Cqrs" -o "${basepath}/${agentname}.Agent.Cqrs"
 dotnet new aspire-servicedefaults -n "${agentname}.Y.Core" -o "${basepath}/${agentname}.Y.Core"
