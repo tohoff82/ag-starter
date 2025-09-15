@@ -2,41 +2,8 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/platform-.NET%209-brightgreen)](https://dotnet.microsoft.com/download)
-[![C## 💳 Support Our## 💳 Support Our Security Research
-
-**[🔗 Donate via Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
-
-Your support helps us continue research in the field of secure AI usage and development of ethical methodologies for artificial intelligence. Funds are directed towards:
-
-- AI agent security research
-- Development of new ethical standards
-- Creation of open tools for the community
-- Support for open source projects
-
-## 📧 Contacts
-
-If you have questions about using this starter kit, please create an issue in this repository.
-
----
-
-**Made with ❤️ in Ukraine**
-
-**[🔗 Donate via Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
-
-Your support helps us continue research in the field of secure AI usage and development of ethical methodologies for artificial intelligence. Funds are directed towards:
-
-- AI agent security research
-- Development of new ethical standards
-- Creation of open tools for the community
-- Support for open source projects
-
-## 📧 Contacts
-
-If you have questions about using this starter kit, please create an issue in this repository.
-
----
-
-**Made with ❤️ in Ukraine**hields.io/badge/architecture-CQRS-orange)](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+[![C#](https://img.shields.io/badge/C%23-12.0-blue)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+[![Architecture](https://img.shields.io/badge/architecture-CQRS-orange)](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
 
 A starter kit for developing secure AI agents with built-in ethical methodology and CQRS architecture for easy integration with existing systems.
 
@@ -321,6 +288,22 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 ## 👥 Authors
 
 - **tohoff82** - *Development and maintenance* - [GitHub](https://github.com/tohoff82)
+
+## 💳 Support Our Security Research
+
+**[🔗 Donate via Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
+
+Your support helps us continue research in the field of secure AI usage and development of ethical methodologies for artificial intelligence. Funds are directed towards:
+
+- AI agent security research
+- Development of new ethical standards
+- Creation of open tools for the community
+- Support for open source projects
+
+## 📧 Contacts
+
+If you have questions about using this starter kit, please create an issue in this repository.
+
 ---
 
 **Made with ❤️ in Ukraine**
