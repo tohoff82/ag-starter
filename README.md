@@ -1,308 +1,326 @@
-# Стартовий Комплект для Розробки Безпечних AI Агентів
+# Secure AI Agents Development Starter Kit
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/platform-.NET%209-brightgreen)](https://dotnet.microsoft.com/download)
-[![CQRS](https://img.shields.io/badge/architecture-CQRS-orange)](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+[![C## 💳 Support Our## 💳 Support Our Security Research
 
-Стартовий комплект для розробки безпечних AI агентів із вбудованою етичною методологією та CQRS архітектурою для легкої інтеграції з існуючими системами.
+**[🔗 Donate via Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
 
-## 📑 Опис
+Your support helps us continue research in the field of secure AI usage and development of ethical methodologies for artificial intelligence. Funds are directed towards:
 
-Цей стартовий комплект надає базову інфраструктуру та архітектуру для створення AI агентів, які відповідають стандартам безпеки та етики. Використовуючи паттерн CQRS (Command Query Responsibility Segregation) та інтеграцію з Model Context Protocol (MCP), розробники отримують готовий фреймворк для швидкого та ефективного розгортання AI рішень.
+- AI agent security research
+- Development of new ethical standards
+- Creation of open tools for the community
+- Support for open source projects
 
-## 🔑 Ключові особливості
+## 📧 Contacts
 
-- **Мікросервісна архітектура** - побудована на .NET Aspire для оркестрації сервісів
-- **Патерн CQRS** - чітке розділення операцій читання та запису
-- **Інтеграція з Model Context Protocol (MCP)** - стандартизований протокол для взаємодії з великими мовними моделями
-- **Етична методологія** - вбудовані механізми для забезпечення відповідальних AI взаємодій
-- **API-перший підхід** - повна підтримка RESTful API та документування через Swagger
-- **Централізована конфігурація** - єдине джерело налаштувань для всіх компонентів
-- **Готові точки входу** - попередньо сконфігуровані API, MCP та веб-ендпоінти
-- **Документація для AI агентів** - спеціалізована документація в AGENTS.md та agent_actions/ для автоматизації розробки
-- **Шаблони та паттерни** - готові до використання шаблони для CQRS, контролерів та слоя даних
+If you have questions about using this starter kit, please create an issue in this repository.
 
-## 🛠️ Технічний стек
+---
 
-- **Платформа:** .NET 9.0+
-- **Оркестрація:** .NET Aspire
+**Made with ❤️ in Ukraine**
+
+**[🔗 Donate via Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
+
+Your support helps us continue research in the field of secure AI usage and development of ethical methodologies for artificial intelligence. Funds are directed towards:
+
+- AI agent security research
+- Development of new ethical standards
+- Creation of open tools for the community
+- Support for open source projects
+
+## 📧 Contacts
+
+If you have questions about using this starter kit, please create an issue in this repository.
+
+---
+
+**Made with ❤️ in Ukraine**hields.io/badge/architecture-CQRS-orange)](https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)
+
+A starter kit for developing secure AI agents with built-in ethical methodology and CQRS architecture for easy integration with existing systems.
+
+## 📑 Description
+
+This starter kit provides basic infrastructure and architecture for creating AI agents that meet security and ethics standards. Using the CQRS (Command Query Responsibility Segregation) pattern and integration with Model Context Protocol (MCP), developers get a ready-made framework for fast and efficient deployment of AI solutions.
+
+## 🔑 Key Features
+
+- **Microservices Architecture** - built on .NET Aspire for service orchestration
+- **CQRS Pattern** - clear separation of read and write operations
+- **Model Context Protocol (MCP) Integration** - standardized protocol for interaction with large language models
+- **Ethical Methodology** - built-in mechanisms for ensuring responsible AI interactions
+- **API-First Approach** - full support for RESTful API and documentation through Swagger
+- **Centralized Configuration** - single source of settings for all components
+- **Ready-to-Use Endpoints** - pre-configured API, MCP, and web endpoints
+- **AI Agent Documentation** - specialized documentation in AGENTS.md and agent_actions/ for development automation
+- **Templates and Patterns** - ready-to-use templates for CQRS, controllers, and data layer
+
+## 🛠️ Tech Stack
+
+- **Platform:** .NET 9.0+
+- **Orchestration:** .NET Aspire
 - **CQRS:** MediatR
-- **Валідація:** FluentValidation
-- **API документація:** Swagger/OpenAPI
-- **Моніторинг здоров'я:** AspNetCore.HealthChecks
-- **Шаблони розробки:** Вбудовані шаблони та паттерни для швидкої розробки
-- **Багатосховищна підтримка даних:** MongoDB, In-Memory Cache, JSON File Storage
+- **Validation:** FluentValidation
+- **API Documentation:** Swagger/OpenAPI
+- **Health Monitoring:** AspNetCore.HealthChecks
+- **Development Templates:** Built-in templates and patterns for rapid development
+- **Multi-Storage Data Support:** MongoDB, In-Memory Cache, JSON File Storage
 
-## ⚙️ Вимоги
+## ⚙️ Requirements
 
-- .NET 9.0 SDK або вище
+- .NET 9.0 SDK or higher
 - .NET Aspire Workload
-- Bash-сумісний термінал (для скрипту генерації)
+- Bash-compatible terminal (for generation script)
 
-## 🚀 Початок роботи
+## 🚀 Getting Started
 
-### Крок 1: Підготовка середовища
+### Step 1: Environment Setup
 
 ```bash
-# Встановлення .NET Aspire workload
+# Install .NET Aspire workload
 dotnet workload install aspire
 ```
 
-### Крок 2: Клонування репозиторію
+### Step 2: Clone Repository
 
 ```bash
-# Клонування стартового комплекту
+# Clone starter kit
 git clone https://github.com/tohoff82/ag-starter.git
 cd ag-starter
 ```
 
-### Крок 3: Налаштування скрипту
+### Step 3: Script Configuration
 
-Скрипт `agent_starter_kit.sh` використовує наступний синтаксис:
+The `agent_starter_kit.sh` script uses the following syntax:
 
 ```bash
 ./agent_starter_kit.sh <agent-name>
 ```
 
-**Параметри:**
-- `<agent-name>` - назва вашого проекту (обов'язковий параметр)
+**Parameters:**
+- `<agent-name>` - your project name (required parameter)
 
-**Приклади:**
+**Examples:**
 ```bash
-./agent_starter_kit.sh MyAgent       # Створить проект MyAgent
-./agent_starter_kit.sh ChatBot       # Створить проект ChatBot  
-./agent_starter_kit.sh DataProcessor # Створить проект DataProcessor
+./agent_starter_kit.sh MyAgent       # Creates MyAgent project
+./agent_starter_kit.sh ChatBot       # Creates ChatBot project  
+./agent_starter_kit.sh DataProcessor # Creates DataProcessor project
 ```
 
-**Примітка:** Скрипт автоматично:
-- Перевіряє наявність .NET 9.0+
-- Встановлює .NET Aspire templates (якщо потрібно)
-- Створює всі необхідні проекти та залежності
-- Генерує документацію AGENTS.md та agent_actions/
-- Налаштовує централізовану конфігурацію
+**Note:** The script automatically:
+- Checks for .NET 9.0+ availability
+- Installs .NET Aspire templates (if needed)
+- Creates all necessary projects and dependencies
+- Generates AGENTS.md documentation and agent_actions/
+- Sets up centralized configuration
 
-### Крок 4: Генерація проекту
+### Step 4: Project Generation
 
 ```bash
-# Запуск скрипту генерації з назвою проекту
+# Run generation script with project name
 chmod +x agent_starter_kit.sh
 ./agent_starter_kit.sh YourProjectName
 ```
 
-**Примітка:** Замініть `YourProjectName` на назву вашого проекту (наприклад, `MyAgent`, `ChatBot`, `DataProcessor`)
+**Note:** Replace `YourProjectName` with your project name (e.g., `MyAgent`, `ChatBot`, `DataProcessor`)
 
-## 🚀 Швидкий старт
+## 🚀 Quick Start
 
 ```bash
-# Клонування репозиторію
+# Clone repository
 git clone https://github.com/tohoff82/ag-starter.git
 cd ag-starter
 
-# Встановлення .NET Aspire workload (якщо ще не встановлено)
+# Install .NET Aspire workload (if not already installed)
 dotnet workload install aspire
 
-# Генерація нового проекту
+# Generate new project
 chmod +x agent_starter_kit.sh
 ./agent_starter_kit.sh MyAgent
 
-# Запуск згенерованого проекту
+# Run generated project
 dotnet watch run --project MyAgent.Agent/MyAgent.Agent.csproj
 ```
 
-## 📂 Згенерована структура проекту
+## 📂 Generated Project Structure
 
-Після виконання скрипту, буде створено наступну структуру проекту:
+After running the script, the following project structure will be created:
 
 ```
-yourprojectname.Agent/            # Aspire хост для оркестрації всіх сервісів
-yourprojectname.Agent.Cqrs/       # Бібліотека класів для CQRS команд, запитів і обробників
-yourprojectname.Agent.Data/       # Слой доступу до даних з підтримкою MongoDB, Cache, JSON
-yourprojectname.Y.Core/           # Базові сервіси та розширення
-yourprojectname.Api.Endpoints/    # Web API для зовнішніх API-ендпоінтів
-yourprojectname.Mcp.Endpoints/    # Web API для ендпоінтів Model Context Protocol
-yourprojectname.Web.Endpoints/    # Веб-застосунок для користувацького інтерфейсу
-AGENTS.md                         # Документація для AI агентів
-agent_actions/                    # Детальні посібники для розробки
-├── AGENT_ACTION_CHOR.md          # Chain of Responsibility паттерн
-├── AGENT_ACTION_CODESTYLE.md     # Стандарти коду
-├── AGENT_ACTION_CONTROLLER.md    # Шаблони контролерів
-├── AGENT_ACTION_CQRS.md          # Генерація CQRS компонентів
-└── AGENT_ACTION_DATA.md          # Робота зі слоєм даних
-README.md                         # Документація проекту
-src.sln                          # Solution файл
+yourprojectname.Agent/            # Aspire host for orchestrating all services
+yourprojectname.Agent.Cqrs/       # Class library for CQRS commands, queries & handlers
+yourprojectname.Agent.Data/       # Data access layer with MongoDB, Cache, JSON support
+yourprojectname.Y.Core/           # Core services and extensions
+yourprojectname.Api.Endpoints/    # Web API for external API endpoints
+yourprojectname.Mcp.Endpoints/    # Web API for Model Context Protocol endpoints
+yourprojectname.Web.Endpoints/    # Web application for user interface
+AGENTS.md                         # Documentation for AI agents
+agent_actions/                    # Detailed development guides
+├── AGENT_ACTION_CHOR.md          # Chain of Responsibility pattern
+├── AGENT_ACTION_CODESTYLE.md     # Code standards
+├── AGENT_ACTION_CONTROLLER.md    # Controller templates
+├── AGENT_ACTION_CQRS.md          # CQRS component generation
+└── AGENT_ACTION_DATA.md          # Data layer operations
+README.md                         # Project documentation
+src.sln                          # Solution file
 ```
 
-### Опис компонентів
+### Component Description
 
-- **Agent** - Головний компонент, який координує взаємодію між різними сервісами
-- **Agent.Cqrs** - Містить команди, запити та обробники для реалізації паттерну CQRS
-- **Agent.Data** - Універсальний слой доступу до даних з підтримкою множинних сховищ
-- **Y.Core** - Містить сервісні розширення та конфігурації за замовчуванням
-- **Api.Endpoints** - Надає RESTful API для взаємодії із зовнішніми системами
-- **Mcp.Endpoints** - Реалізує інтерфейс для взаємодії з моделями штучного інтелекту через протокол MCP
-- **Web.Endpoints** - Надає веб-інтерфейс для взаємодії з системою
-- **AGENTS.md** - Центральна документація для AI агентів з описом архітектури та принципів
-- **agent_actions/** - Детальні посібники та шаблони для автоматизації розробки
+- **Agent** - Main component that coordinates interaction between different services
+- **Agent.Cqrs** - Contains commands, queries, and handlers for implementing CQRS pattern
+- **Agent.Data** - Universal data access layer with multiple storage support
+- **Y.Core** - Contains service extensions and default configurations
+- **Api.Endpoints** - Provides RESTful API for interaction with external systems
+- **Mcp.Endpoints** - Implements interface for interaction with AI models through MCP protocol
+- **Web.Endpoints** - Provides web interface for system interaction
+- **AGENTS.md** - Central documentation for AI agents with architecture and principles description
+- **agent_actions/** - Detailed guides and templates for development automation
 
-## 🔍 Архітектурні принципи
+## 🔍 Architectural Principles
 
 ### CQRS (Command Query Responsibility Segregation)
-Архітектура чітко розділяє операції читання (запити) та операції запису (команди), що покращує масштабованість, продуктивність та безпеку системи.
+The architecture clearly separates read operations (queries) and write operations (commands), which improves scalability, performance, and system security.
 
 ```csharp
-// Приклад команди
+// Example command
 public class ExampleCommand : IRequest<bool>
 {
     public string Data { get; set; } = string.Empty;
 }
 
-// Приклад запиту
+// Example query
 public class ExampleQuery : IRequest<string>
 {
     public string Id { get; set; } = string.Empty;
 }
 ```
 
-### Багатосховищна архітектура даних
-Проект підтримує множинні типи сховищ даних через універсальний Repository Pattern:
+### Multi-Storage Data Architecture
+The project supports multiple storage types through a universal Repository Pattern:
 
-- **MongoDB** - для постійного зберігання та складних запитів
-- **In-Memory Cache** - для швидкого доступу до часто використовуваних даних
-- **JSON File Storage (Flash)** - для конфігурацій та малих наборів даних
+- **MongoDB** - for persistent storage and complex queries
+- **In-Memory Cache** - for fast access to frequently used data
+- **JSON File Storage (Flash)** - for configurations and small datasets
 
 ### Chain of Responsibility Pattern
-Вбудований паттерн ланцюга відповідальності для обробки запитів через серію обробників:
+Built-in Chain of Responsibility pattern for processing requests through a series of handlers:
 
-- Type-safe обробка запитів/відповідей
-- Налаштовуваний timeout та валідація
-- Комплексне логування та обробка помилок
-- Інтеграція з dependency injection
+- Type-safe request/response handling
+- Configurable timeout and validation
+- Comprehensive logging and error handling
+- Dependency injection integration
 
 ### Model Context Protocol (MCP)
-Стандартизований протокол для взаємодії з великими мовними моделями (LLM), який забезпечує:
+Standardized protocol for interaction with large language models (LLM), providing:
 
-- Безпечну взаємодію з різними AI провайдерами
-- Етичні обмеження та контроль доступу
-- Логування та моніторинг взаємодій
-- Фільтрацію контенту та обробку промптів
+- Secure interaction with various AI providers
+- Ethical constraints and access control
+- Logging and monitoring of interactions
+- Content filtering and prompt processing
 
-## 🤖 Документація для AI агентів
+## 🤖 AI Agent Documentation
 
-Проект включає спеціалізовану документацію для автоматизації розробки за допомогою AI агентів:
+The project includes specialized documentation for automating development using AI agents:
 
 ### AGENTS.md
-Центральна документація, яка містить:
-- Опис ролей та конфігурацій агентів
-- Схема комунікації між агентами
-- Керівні принципи розробки
-- Стандарти коду та найкращі практики
+Central documentation containing:
+- Description of agent roles and configurations
+- Communication scheme between agents
+- Development guidelines
+- Code standards and best practices
 
-### agent_actions/ директорія
-Детальні посібники для специфічних задач розробки:
+### agent_actions/ directory
+Detailed guides for specific development tasks:
 
-- **AGENT_ACTION_CHOR.md** - Імплементація Chain of Responsibility паттерну
-- **AGENT_ACTION_CODESTYLE.md** - Стандарти коду C# та найкращі практики
-- **AGENT_ACTION_CONTROLLER.md** - Шаблони для створення CQRS контролерів
-- **AGENT_ACTION_CQRS.md** - Генерація CQRS компонентів (команди, запити, обробники)
-- **AGENT_ACTION_DATA.md** - Робота зі слоєм даних та множинними сховищами
+- **AGENT_ACTION_CHOR.md** - Chain of Responsibility pattern implementation
+- **AGENT_ACTION_CODESTYLE.md** - C# code standards and best practices
+- **AGENT_ACTION_CONTROLLER.md** - Templates for creating CQRS controllers
+- **AGENT_ACTION_CQRS.md** - CQRS component generation (commands, queries, handlers)
+- **AGENT_ACTION_DATA.md** - Working with data layer and multiple storages
 
-Ця документація дозволяє AI агентам:
-- Розуміти архітектуру проекту
-- Генерувати код відповідно до стандартів
-- Автоматизувати створення нових компонентів
-- Забезпечувати консистентність розробки
+This documentation allows AI agents to:
+- Understand project architecture
+- Generate code according to standards
+- Automate creation of new components
+- Ensure development consistency
 
-## 🛡️ Етична методологія
+## 🛡️ Ethical Methodology
 
-Стартовий комплект впроваджує ряд механізмів для забезпечення етичного використання AI:
+The starter kit implements a series of mechanisms to ensure ethical AI usage:
 
-- **Валідація вхідних даних** - FluentValidation для перевірки вхідних запитів
-- **Контроль доступу** - Обмеження доступу до чутливих операцій
-- **Логування та аудит** - Відстеження всіх взаємодій з AI системами
-- **Обмеження та фільтрація** - Можливість встановлення обмежень на використання AI
+- **Input Data Validation** - FluentValidation for checking input requests
+- **Access Control** - Restrictions on access to sensitive operations
+- **Logging and Audit** - Tracking all interactions with AI systems
+- **Limitations and Filtering** - Ability to set restrictions on AI usage
 
-## 📊 Моніторинг та діагностика
+## 📊 Monitoring and Diagnostics
 
-Проект включає в себе готові інструменти для моніторингу та діагностики:
+The project includes ready-to-use tools for monitoring and diagnostics:
 
-- **Health Checks** - Перевірка стану сервісів
-- **Swagger/OpenAPI** - Документація API в реальному часі
-- **Централізоване логування** - Єдине джерело для логів
+- **Health Checks** - Service status verification
+- **Swagger/OpenAPI** - Real-time API documentation
+- **Centralized Logging** - Single source for logs
 
-## 📝 Запуск згенерованого проекту
+## 📝 Running Generated Project
 
 ```bash
-# Перейти до згенерованої директорії
+# Navigate to generated directory
 cd yourprojectname-directory
 
-# Відновлення залежностей та побудова проекту
+# Restore dependencies and build project
 dotnet restore
 dotnet build
 
-# Запуск проекту (замініть YourProjectName на назву вашого проекту)
+# Run project (replace YourProjectName with your project name)
 dotnet run --project YourProjectName.Agent/YourProjectName.Agent.csproj
 
-# або використовуйте dotnet watch для автоматичного перезавантаження під час розробки
+# or use dotnet watch for automatic reload during development
 dotnet watch run --project YourProjectName.Agent/YourProjectName.Agent.csproj
 ```
 
-Після запуску проект буде доступний за адресами:
-- **Aspire Dashboard:** `https://localhost:17040` (з токеном автентифікації)
-- **API Endpoints:** `https://localhost:7xxx` (порт генерується автоматично)  
-- **MCP Endpoints:** `https://localhost:7xxx` (порт генерується автоматично)
-- **Web Endpoints:** `https://localhost:7xxx` (порт генерується автоматично)
+After startup, the project will be available at:
+- **Aspire Dashboard:** `https://localhost:17040` (with authentication token)
+- **API Endpoints:** `https://localhost:7xxx` (port generated automatically)  
+- **MCP Endpoints:** `https://localhost:7xxx` (port generated automatically)
+- **Web Endpoints:** `https://localhost:7xxx` (port generated automatically)
 
-## 🔐 Безпека
+## 🔐 Security
 
-Стартовий комплект реалізує базові механізми безпеки:
+The starter kit implements basic security mechanisms:
 
-- HTTPS за замовчуванням
-- Валідація запитів
-- Авторизація та автентифікація (готові для налаштування)
-- Безпечна обробка помилок
+- HTTPS by default
+- Request validation
+- Authorization and authentication (ready for configuration)
+- Secure error handling
 
-## 📈 Розширення проекту
+## 📈 Project Extension
 
-Проект легко розширюється для включення додаткової функціональності:
+The project is easily extensible to include additional functionality:
 
-1. **Додавання нових CQRS компонентів** - використовуйте шаблони з `agent_actions/AGENT_ACTION_CQRS.md`
-2. **Створення нових контролерів** - слідуйте паттернам з `agent_actions/AGENT_ACTION_CONTROLLER.md`
-3. **Розширення слоя даних** - додавайте нові ентіті та репозиторії згідно з `agent_actions/AGENT_ACTION_DATA.md`
-4. **Імплементація нових паттернів** - використовуйте Chain of Responsibility та інші паттерни з `agent_actions/AGENT_ACTION_CHOR.md`
-5. **Дотримання стандартів коду** - слідуйте керівним принципам з `agent_actions/AGENT_ACTION_CODESTYLE.md`
+1. **Adding new CQRS components** - use templates from `agent_actions/AGENT_ACTION_CQRS.md`
+2. **Creating new controllers** - follow patterns from `agent_actions/AGENT_ACTION_CONTROLLER.md`
+3. **Extending data layer** - add new entities and repositories according to `agent_actions/AGENT_ACTION_DATA.md`
+4. **Implementing new patterns** - use Chain of Responsibility and other patterns from `agent_actions/AGENT_ACTION_CHOR.md`
+5. **Following code standards** - follow guidelines from `agent_actions/AGENT_ACTION_CODESTYLE.md`
 
-### Швидкий старт розробки
+### Quick Development Start
 
-Завдяки вбудованій документації для AI агентів, ви можете:
+Thanks to built-in documentation for AI agents, you can:
 
-- Автоматично генерувати нові CQRS команди та запити
-- Створювати контролери з правильною обробкою помилок та логуванням
-- Додавати нові ентіті з підтримкою всіх типів сховищ даних
-- Забезпечувати консистентність коду відповідно до проектних стандартів
+- Automatically generate new CQRS commands and queries
+- Create controllers with proper error handling and logging
+- Add new entities with support for all storage types
+- Ensure code consistency according to project standards
 
-## 📄 Ліцензія
+## 📄 License
 
-Цей проект ліцензовано за умовами Apache License 2.0. Дивіться файл [LICENSE](LICENSE) для отримання детальної інформації.
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for detailed information.
 
-## 👥 Автори
+## 👥 Authors
 
-- **tohoff82** - *Розробка та підтримка* - [GitHub](https://github.com/tohoff82)
-
-## � Підтримка дослідження безпеки
-
-**[🔗 Донат через Monobank →](https://send.monobank.ua/4yPJS8ta1c)**
-
-Ваша підтримка допомагає нам продовжувати дослідження в області безпечного використання AI та розробки етичних методологій для штучного інтелекту. Кошти спрямовуються на:
-
-- Дослідження безпеки AI агентів
-- Розробку нових етичних стандартів
-- Створення відкритих інструментів для спільноти
-- Підтримку проектів з відкритим кодом
-
-## �📧 Контакти
-
-Якщо у вас є питання щодо використання цього стартового комплекту, будь ласка, створіть issue в цьому репозиторії.
-
+- **tohoff82** - *Development and maintenance* - [GitHub](https://github.com/tohoff82)
 ---
 
-**Зроблено з ❤️ в Україні**
+**Made with ❤️ in Ukraine**
